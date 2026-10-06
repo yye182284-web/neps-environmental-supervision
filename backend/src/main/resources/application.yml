@@ -1,0 +1,83 @@
+server:
+  port: 9000
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        same-site: lax
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+
+#数据库的链接配置
+spring:
+  ai:
+    openai:
+      # Ollama 提供 OpenAI 兼容接口；所有参数均可通过环境变量覆盖。
+      base-url: ${NEPS_AI_BASE_URL:http://127.0.0.1:11434/}
+      api-key: ${NEPS_AI_API_KEY:ollama}
+      chat:
+        options:
+          model: ${NEPS_AI_MODEL:qwen3:1.7b}
+          temperature: ${NEPS_AI_TEMPERATURE:0.25}
+          max-tokens: ${NEPS_AI_MAX_TOKENS:700}
+  datasource:
+    driver-class-name:  com.mysql.cj.jdbc.Driver #数据库驱动
+    url: ${NEPS_DB_URL:jdbc:mysql://localhost:3306/neps_environment?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&useInformationSchema=true}
+    username: ${NEPS_DB_USERNAME:root}
+    # 数据库密码不再写入源码，通过系统环境变量 NEPS_DB_PASSWORD 注入。
+    password: ${NEPS_DB_PASSWORD}
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+      schema-locations:
+        - classpath:database/base_schema.sql
+        - classpath:database/reference_data.sql
+        - classpath:database/role_workflow.sql
+        - classpath:database/city_seed.sql
+#  cache:
+#    type: redis  #这样缓存就切换到了Redis当中
+
+#配置日志
+logging:
+  level:
+    root: info  #日志级别为 info 几乎是所有日志都是info级别  全部默认已经使用上了
+    com.yuan.demo: info   #额外设置这个包的日志级别 debug级别
+
+#还希望经常能看到mybatis生成执行的SQL语句
+mybatis-plus:
+  configuration:
+    # 大样本统计时禁止逐行打印数千条查询结果，避免控制台 I/O 拖慢接口。
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+neps:
+  ai:
+    model: ${NEPS_AI_MODEL:qwen3:1.7b}
+    history-turns: ${NEPS_AI_HISTORY_TURNS:6}
+  task:
+    accept-timeout-minutes: 30
+  demo-data:
+    enabled: true
+    records-per-year: 3600
+
+#日志的级别
+#OFF  全部关闭
+#ERROR 系统发生的错误，需要立即关注
+#WARN  警告，需要关注，但不 影响系统运行
+#INFO  信息，一般不需要关注
+#DEBUG 调试信息，一般最多在开发过程中，程序需要调试的时候才打开。
+#TRACE 最细颗粒度的日志输出，需要看的内容，需要看的非常详细才打开。

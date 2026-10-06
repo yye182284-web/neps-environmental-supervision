@@ -1,0 +1,29 @@
+# IntelliJ IDEA / VS Code
+.idea/
+*.iml
+.vscode/
+
+# Java
+**/target/
+*.log
+hs_err_pid*
+
+# Node
+**/node_modules/
+**/dist/
+npm-debug.log*
+
+# Local configuration and secrets
+.env
+.env.local
+application-local.yml
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Automated browser output
+**/selenium-report/
+**/.edge-*/
+**/*.png
+!docs/images/*.png

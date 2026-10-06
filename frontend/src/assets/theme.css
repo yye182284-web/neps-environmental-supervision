@@ -1,0 +1,95 @@
+:root {
+  --neps-primary: #078467;
+  --neps-primary-dark: #055f4c;
+  --neps-primary-soft: #e7f7f2;
+  --neps-secondary: #176f9f;
+  --neps-secondary-soft: #e9f4fb;
+  --neps-ink: #102f46;
+  --neps-muted: #6f8292;
+  --neps-line: rgba(28, 68, 90, .11);
+  --neps-surface: rgba(255, 255, 255, .92);
+  --neps-shadow: 0 18px 50px rgba(19, 51, 70, .09);
+  --neps-shadow-hover: 0 24px 60px rgba(15, 73, 82, .14);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--neps-ink);
+  background: #f2f7f7;
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", Inter, system-ui, sans-serif;
+}
+::selection { color: #fff; background: #16866f; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: #edf3f4; }
+::-webkit-scrollbar-thumb { border: 2px solid #edf3f4; border-radius: 999px; background: #a9c1c2; }
+::-webkit-scrollbar-thumb:hover { background: #6e9995; }
+
+button, input, select, textarea { font: inherit; }
+button { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease; }
+button:not(:disabled):active { transform: translateY(1px) scale(.99); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(15, 135, 105, .2);
+  outline-offset: 2px;
+}
+
+.page-shell, .workspace-page, .admin-page, .decision-page, .list-page, .form-page {
+  position: relative;
+  isolation: isolate;
+  background-color: #f2f7f7;
+  background-image:
+    radial-gradient(circle at 9% 2%, rgba(14, 149, 113, .12), transparent 27%),
+    radial-gradient(circle at 92% 5%, rgba(22, 111, 159, .11), transparent 24%),
+    linear-gradient(180deg, #eff8f5 0, #f4f7fa 340px, #f5f7f9 100%);
+  animation: page-in .45s ease both;
+}
+
+.content-card, .card, .panel, .list-card, .form-card {
+  border-color: var(--neps-line) !important;
+  background: var(--neps-surface) !important;
+  box-shadow: var(--neps-shadow) !important;
+  backdrop-filter: blur(14px);
+}
+.summary-grid article, .metrics article, .risk-strip article {
+  overflow: hidden;
+  border-color: var(--neps-line) !important;
+  box-shadow: 0 10px 30px rgba(26, 63, 82, .065);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.summary-grid article::before, .metrics article::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #0b9070, #2d82ac, transparent 88%);
+  opacity: .75;
+}
+.summary-grid article { position: relative; }
+.summary-grid article:hover, .metrics article:hover, .risk-strip article:hover {
+  transform: translateY(-3px);
+  border-color: rgba(11, 132, 103, .2) !important;
+  box-shadow: var(--neps-shadow-hover);
+}
+.panel { transition: transform .25s ease, box-shadow .25s ease; }
+.panel:hover { box-shadow: var(--neps-shadow-hover) !important; }
+
+table tbody tr { transition: background .18s ease, transform .18s ease; }
+table tbody tr:hover { background: linear-gradient(90deg, rgba(230, 248, 242, .7), rgba(239, 247, 251, .45)) !important; }
+table thead th { color: #647989 !important; letter-spacing: .15px; }
+
+.primary-btn, .btn-primary, .submit, .hero button:not(.back-btn), .page-hero button, .assign button {
+  background: linear-gradient(135deg, #08866a, #176f9f) !important;
+  box-shadow: 0 10px 24px rgba(10, 112, 91, .18);
+}
+.primary-btn:hover:not(:disabled), .btn-primary:hover:not(:disabled), .submit:hover:not(:disabled), .hero button:hover:not(:disabled), .page-hero button:hover:not(:disabled), .assign button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(8, 105, 88, .24);
+}
+.toast { backdrop-filter: blur(12px); }
+
+@keyframes page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
